@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lista de Compras</title>
+
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #111827;
+      padding: 1rem 1.5rem;
+      font-size: 1.3rem;
+      font-weight: 600;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+
+    main {
+      flex: 1;
+      padding: 1.5rem;
+    }
+
+    .card {
+      background: #1f2937;
+      padding: 1.25rem;
+      border-radius: 0.75rem;
+      max-width: 480px;
+      margin: 0 auto;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    }
+
+    .row {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    input {
+      flex: 1;
+      padding: 0.7rem;
+      border-radius: 0.5rem;
+      border: 1px solid #4b5563;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: 1rem;
+    }
+
+    button {
+      padding: 0.7rem 1rem;
+      border: none;
+      border-radius: 0.5rem;
+      background: #22c55e;
+      color: #022c22;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      background: #020617;
+      padding: 0.6rem 0.8rem;
+      border-radius: 0.5rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1rem;
+    }
+
+    li span {
+      flex: 1;
+      margin-right: 0.5rem;
+    }
+
+    .done {
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
+
+    .btn-remove {
+      background: #ef4444;
+      color: #fff;
+      padding: 0.4rem 0.6rem;
+      border-radius: 0.4rem;
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+
+<body>
+  <header>Lista de Compras</header>
+
+  <main>
+    <div class="card">
+      <div class="row">
+        <input id="itemInput" type="text" placeholder="Adicionar item..." />
+        <button id="addBtn">+</button>
+      </div>
+
+      <ul id="list"></ul>
+    </div>
+  </main>
+
+  <script>
+    const input = document.getElementById("itemInput");
+    const addBtn = document.getElementById("addBtn");
+    const list = document.getElementById("list");
+
+    function addItem() {
+      const text = input.value.trim();
+      if (!text) return;
+
+      const li = document.createElement("li");
+
+      const span = document.createElement("span");
+      span.textContent = text;
+
+      // Marcar como comprado
+      span.onclick = () => span.classList.toggle("done");
+
+      // Remover item
+      const removeBtn = document.createElement("button");
+      removeBtn.textContent = "X";
+      removeBtn.className = "btn-remove";
+      removeBtn.onclick = () => li.remove();
+
+      li.appendChild(span);
+      li.appendChild(removeBtn);
+      list.appendChild(li);
+
+      input.value = "";
+      input.focus();
+    }
+
+    addBtn.onclick = addItem;
+    input.addEventListener("keydown", e => {
+      if (e.key === "Enter") addItem();
+    });
+  </script>
+</body>
+</html>
